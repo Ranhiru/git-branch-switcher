@@ -1,9 +1,12 @@
+#!/usr/bin/env ruby
+
 require "tty-prompt"
 
-choices = %w(vodka beer wine whisky bourbon)
+list_of_branches = `git branch --sort=-committerdate`.split("\n")
+                                                     .map { |branch| branch[2..branch.length] }
 
-list_of_branches = `git branch --sort=-committerdate`
-puts list_of_branches
+prompt = TTY::Prompt.new
+selected_branch = prompt.select("Select branch", list_of_branches, filter: true)
 
-# prompt = TTY::Prompt.new
-# prompt.multi_select("Select drinks?", choices, filter: true)
+checkout_command = "git checkout #{selected_branch}"
+`#{checkout_command}`
