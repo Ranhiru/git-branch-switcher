@@ -1,5 +1,13 @@
 #!/usr/bin/env ruby
 
+require 'bundler/inline'
+
+gemfile do
+  source "https://rubygems.org"
+  git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
+  gem 'tty-prompt'
+end
+
 require "tty-prompt"
 
 list_of_branches = `git branch --sort=-committerdate`.split("\n")
